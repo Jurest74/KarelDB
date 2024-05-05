@@ -1,0 +1,152 @@
+{
+    "Robots": [
+        {
+            "tipoRobot": 1,
+            "idRobot": 101,
+            "encendido": true
+        },
+        {
+            "tipoRobot": 2,
+            "idRobot": 201,
+            "encendido": true
+        },
+        {
+            "tipoRobot": 2,
+            "idRobot": 102,
+            "encendido": true
+        },
+        {
+            "tipoRobot": 2,
+            "idRobot": 102,
+            "encendido": true
+        },
+        {
+            "tipoRobot": 2,
+            "idRobot": 102,
+            "encendido": true
+        },
+        {
+            "tipoRobot": 2,
+            "idRobot": 102,
+            "encendido": true
+        },
+        {
+            "tipoRobot": 2,
+            "idRobot": 102,
+            "encendido": false
+        }
+    ],
+    "LogEventos": [
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 0
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 0
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 0
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 0
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 89
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 89
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 89
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 89
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 89
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 89
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 9
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 9
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 9
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 9
+        },
+        {
+            "timeStamp": "2022-04-29 10:45:00",
+            "idRobot": 102,
+            "avenida": 15,
+            "calle": 8,
+            "sirenas": 9
+        }
+    ],
+    "EstadoPrograma": [
+        {
+            "timeStamp": "2022-04-30 08:00:00",
+            "estado": 1
+        }
+    ]
+}
