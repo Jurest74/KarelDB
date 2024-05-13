@@ -4,9 +4,14 @@ from robot import Robot
 from logevento import LogEvento
 from estadoprograma import EstadoPrograma
 import threading
+#import sched
+#import time
 
 base_datos = {}  # Variable global para almacenar la base de datos cargada
 semaphore = threading.Semaphore(1)  # Semáforo para permitir un único hilo a la vez
+#scheduler = sched.scheduler(time.time, time.sleep)  # Scheduler para programar tareas
+numero_registros = 0
+
 
 def cargar_base_datos(nombre_archivo):
     try:
@@ -26,6 +31,18 @@ def agregar_registro(tabla, registro):
             base_datos[tabla] = []
         base_datos[tabla].append(registro)
         guardar_base_datos(base_datos, nombre_archivo)
+        numero_registros += 1
+        if numero_registros >= 50:
+            flush_base_datos()
+
+        
+def flush_base_datos():
+    global base_datos, record_counter
+    guardar_base_datos(base_datos, 'base_datos.json')
+    print("JSON database flushed to disk.")
+    record_counter = 0  
+    base_datos.clear()
+    base_datos.update(cargar_base_datos('base_datos.json'))
 
 def main():
     parser = argparse.ArgumentParser(description='Manejo de base de datos simulada en formato JSON')
@@ -58,7 +75,11 @@ def main():
         estado_programa = EstadoPrograma(args.timeStamp, args.estado)
         agregar_registro('EstadoPrograma', estado_programa.__dict__)
 
+    scheduler.enter(30, 1, flush_base_datos)
+
 if __name__ == "__main__":
     nombre_archivo = 'base_datos.json'  # Nombre del archivo de base de datos
     base_datos = cargar_base_datos(nombre_archivo)  # Cargar la base de datos al inicio
     main()
+    scheduler.run()  # Run the scheduled tasks
+
