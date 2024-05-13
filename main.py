@@ -75,11 +75,9 @@ def main():
         estado_programa = EstadoPrograma(args.timeStamp, args.estado)
         agregar_registro('EstadoPrograma', estado_programa.__dict__)
 
-    scheduler.enter(30, 1, flush_base_datos)
 
 if __name__ == "__main__":
     nombre_archivo = 'base_datos.json'  # Nombre del archivo de base de datos
     base_datos = cargar_base_datos(nombre_archivo)  # Cargar la base de datos al inicio
     main()
-    scheduler.run()  # Run the scheduled tasks
 
