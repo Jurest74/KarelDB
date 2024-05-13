@@ -1,17 +1,15 @@
 import json
 import argparse
+import os
 from robot import Robot
 from logevento import LogEvento
 from estadoprograma import EstadoPrograma
+from table import Table
 import threading
-#import sched
-#import time
 
-base_datos = {}  # Variable global para almacenar la base de datos cargada
-semaphore = threading.Semaphore(1)  # Semáforo para permitir un único hilo a la vez
-#scheduler = sched.scheduler(time.time, time.sleep)  # Scheduler para programar tareas
+base_datos = {}
+semaphore = threading.Semaphore(1)
 numero_registros = 0
-
 
 def cargar_base_datos(nombre_archivo):
     try:
@@ -25,8 +23,8 @@ def guardar_base_datos(base_datos, nombre_archivo):
         json.dump(base_datos, archivo, indent=4)
 
 def agregar_registro(tabla, registro):
-    global base_datos
-    with semaphore:  # Adquirir el semáforo para permitir solo un hilo a la vez
+    global base_datos, numero_registros
+    with semaphore:
         if tabla not in base_datos:
             base_datos[tabla] = []
         base_datos[tabla].append(registro)
@@ -35,12 +33,11 @@ def agregar_registro(tabla, registro):
         if numero_registros >= 50:
             flush_base_datos()
 
-        
 def flush_base_datos():
-    global base_datos, record_counter
+    global base_datos, numero_registros
     guardar_base_datos(base_datos, 'base_datos.json')
     print("JSON database flushed to disk.")
-    record_counter = 0  
+    numero_registros = 0
     base_datos.clear()
     base_datos.update(cargar_base_datos('base_datos.json'))
 
@@ -62,22 +59,29 @@ def main():
     print("Argumentos capturados:")
     print(args)
 
-    # Convertir el valor de encendido a un booleano
     encendido = True if args.encendido == 'True' else False
 
     if args.tabla == 'Robots':
+        robots_table = Table('robots.json')
         robot = Robot(args.tipoRobot, args.idRobot, encendido)
-        agregar_registro('Robots', robot.__dict__)
+        robots_table.add_record(robot.__dict__)
     elif args.tabla == 'LogEventos':
+        log_eventos_table = Table('log_eventos.json')
         log_evento = LogEvento(args.timeStamp, args.idRobot, args.avenida, args.calle, args.sirenas)
-        agregar_registro('LogEventos', log_evento.__dict__)
+        log_eventos_table.add_record(log_evento.__dict__)
     elif args.tabla == 'EstadoPrograma':
+        estado_programa_table = Table('estado_programa.json')
         estado_programa = EstadoPrograma(args.timeStamp, args.estado)
-        agregar_registro('EstadoPrograma', estado_programa.__dict__)
+        estado_programa_table.add_record(estado_programa.__dict__)
 
+    if len(robots_table.data) >= 50:
+        robots_table.save_to_json()
+    if len(log_eventos_table.data) >= 50:
+        log_eventos_table.save_to_json()
+    if len(estado_programa_table.data) >= 50:
+        estado_programa_table.save_to_json()
 
 if __name__ == "__main__":
-    nombre_archivo = 'base_datos.json'  # Nombre del archivo de base de datos
-    base_datos = cargar_base_datos(nombre_archivo)  # Cargar la base de datos al inicio
+    nombre_archivo = 'base_datos.json'
+    base_datos = cargar_base_datos(nombre_archivo)
     main()
-
