@@ -1,0 +1,47 @@
+[
+    {
+        "tipoRobot": 1,
+        "idRobot": 100,
+        "encendido": true
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 100,
+        "encendido": true
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 100,
+        "encendido": true
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 100,
+        "encendido": true
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 101,
+        "encendido": true
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 101,
+        "encendido": true
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 102,
+        "encendido": true
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 103,
+        "encendido": true
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 104,
+        "encendido": true
+    }
+]
