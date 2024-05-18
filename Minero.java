@@ -894,6 +894,7 @@ public class Minero extends AugmentedRobot implements Directions {
 		World.readWorld(mundo);
 		World.setDelay(10);
 		World.setVisible(true);
+		World.showSpeedControl(true, true);
 	}
 
 	// Main method

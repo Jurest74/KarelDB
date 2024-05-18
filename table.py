@@ -6,11 +6,17 @@ class Table:
         self.filename = filename
         self.data = []
         self.indexes = {}
+    
+        try:
+            if os.path.exists(filename):
+                with open(filename, 'r') as file:
+                    self.data = json.load(file)
+                    self.create_indexes()
+        except Exception as e:
+            print(f"Error al inicializar la tabla desde el archivo {filename}: {e}")
+            self.data = []
+            self.indexes = {}
 
-        if os.path.exists(filename):
-            with open(filename, 'r') as file:
-                self.data = json.load(file)
-                self.create_indexes()
 
     def create_indexes(self):
         for record in self.data:
