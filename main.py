@@ -69,7 +69,7 @@ def main():
                         help='Tabla en la que se desea agregar un registro')
     parser.add_argument('--tipoRobot', type=int, help='Tipo del robot')
     parser.add_argument('--idRobot', type=int, help='ID del robot')
-    parser.add_argument('--encendido', choices=['True', 'False'], help='Indica si el robot está encendido')
+    parser.add_argument('--encendido', choices=['true', 'false'], help='Indica si el robot está encendido')
     parser.add_argument('--timeStamp', help='Marca de tiempo del evento')
     parser.add_argument('--avenida', type=int, help='Número de la avenida')
     parser.add_argument('--calle', type=int, help='Número de la calle')
@@ -82,7 +82,7 @@ def main():
     print("Argumentos capturados:")
     print(args)
 
-    encendido = args.encendido == 'True'
+    encendido = args.encendido == 'true'
 
     robots_table = Table('robots.json')
     log_eventos_table = Table('log_eventos.json')
