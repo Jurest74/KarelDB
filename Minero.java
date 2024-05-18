@@ -742,7 +742,7 @@ public class Minero extends AugmentedRobot implements Directions {
 		String timestamp = time();
 		RobotsDB(tipoRobot, idRobotActual, encendido = false, avenidaActual, calleActual, 0);
 		LogEventosDB(timestamp, idRobotActual, avenidaActual, calleActual, 0);
-		EstadoProgramaDB(timestamp, 1);
+		EstadoProgramaDB(timestamp, 0);
 	}
 
 	// Moves to the Train dropoff point when exit.

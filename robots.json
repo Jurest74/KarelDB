@@ -28,5 +28,35 @@
         "tipoRobot": 3,
         "idRobot": 6,
         "encendido": "true"
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 1,
+        "encendido": "true"
+    },
+    {
+        "tipoRobot": 1,
+        "idRobot": 2,
+        "encendido": "true"
+    },
+    {
+        "tipoRobot": 2,
+        "idRobot": 3,
+        "encendido": "true"
+    },
+    {
+        "tipoRobot": 2,
+        "idRobot": 4,
+        "encendido": "true"
+    },
+    {
+        "tipoRobot": 3,
+        "idRobot": 5,
+        "encendido": "true"
+    },
+    {
+        "tipoRobot": 3,
+        "idRobot": 6,
+        "encendido": "true"
     }
 ]
