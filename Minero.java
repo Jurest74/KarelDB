@@ -53,7 +53,7 @@ public class Minero extends AugmentedRobot implements Directions {
 	private static ArrayList<Thread> objThreads;
 	// Booleans to control behaviors
 	private static boolean minaVacia = false;
-	private static boolean debugHabilitado = true;
+	private static boolean debugHabilitado = false;
 	private static boolean ejecutarLog = false;
 	private static boolean encontroVeta = false;
 	private static boolean extraccionCompleta = false;
@@ -157,9 +157,7 @@ public class Minero extends AugmentedRobot implements Directions {
 			move();
 
 			String timestamp = time();
-			// RobotsDB(tipoRobot, idRobotActual, encendido = true, avenidaActual,
-			// calleActual,
-			// beepersActuales);
+			RobotsDB(tipoRobot, idRobotActual, encendido = true, avenidaActual, calleActual, beepersActuales);
 			LogEventosDB(timestamp, idRobotActual, avenidaActual, calleActual, beepersActuales);
 			EstadoProgramaDB(timestamp, 1);
 
@@ -184,7 +182,7 @@ public class Minero extends AugmentedRobot implements Directions {
 		int nuevaCalle = determineNuevaCalle();
 		int nuevaAvenida = determineNuevaAvenida();
 		ejecutarLog = (debugHabilitado) ? logMensaje("Me muevo en la mina") : false;
-		mover();
+		move();
 		calleActual = nuevaCalle;
 		avenidaActual = nuevaAvenida;
 	}
@@ -408,6 +406,7 @@ public class Minero extends AugmentedRobot implements Directions {
 		ejecutarLog = (debugHabilitado) ? logMensaje("Dejo los beepers que tenga en la bodega en uso.") : false;
 		while (anyBeepersInBeeperBag()) {
 			putBeeper();
+			beepersActuales--;
 			arr_bodegas[bodegaEnUso]++;
 			if (arr_bodegas[bodegaEnUso] == BEEPERS_POR_BODEGA) {
 				bodegaEnUso++;
@@ -455,16 +454,17 @@ public class Minero extends AugmentedRobot implements Directions {
 
 	// Full Extractor process
 	private void procesarExtractor() {
-		beepersActuales = 0;
+		int beepers = 0;
 		// Picks the beepers from the Train Delivery point
 		ejecutarLog = (debugHabilitado) ? logMensaje("Tomando beepers del punto de extracción") : false;
-		while (nextToABeeper() && beepersActuales < BEEPERS_EXTRACTOR) {
+		while (nextToABeeper() && beepers < BEEPERS_EXTRACTOR) {
 			pickBeeper();
 			beepersActuales++;
+			beepers++;
 		}
 		// If vein is empty and already put all beepers on the Warehouse, release and
 		// allows all miners and trains to go home
-		if (minaVacia && beepersActuales == 0) {
+		if (minaVacia && beepers == 0) {
 			extraccionCompleta = true;
 			ejecutarLog = (debugHabilitado) ? logMensaje("Extraccion completa. Todos regresan a casa.") : false;
 			while (sem_mineros.availablePermits() <= (cantidadMineros - 1))
@@ -479,12 +479,13 @@ public class Minero extends AugmentedRobot implements Directions {
 
 	// Train process
 	private void procesarTren() {
-		beepersActuales = 0;
+		int beepers = 0;
 		// Pickup the amount of beepers that the train can manage
 		ejecutarLog = (debugHabilitado) ? logMensaje("Tomando beepers del punto de delivery de la veta") : false;
-		while (nextToABeeper() && beepersActuales < BEEPERS_TREN) {
+		while (nextToABeeper() && beepers < BEEPERS_TREN) {
 			pickBeeper();
 			beepersActuales++;
+			beepers++;
 			beepersExtraidos--;
 		}
 		// Go to the delivery point
@@ -500,8 +501,10 @@ public class Minero extends AugmentedRobot implements Directions {
 		}
 		// Delivers all beepers that it has in the bag...
 		ejecutarLog = (debugHabilitado) ? logMensaje("Dejando beepers") : false;
-		for (int i = beepersActuales; i > 0; i--)
+		for (int i = beepers; i > 0; i--)
 			putBeeper();
+		beepersActuales--;
+
 		// ... and goes back to the vein delivery point
 		turnLeft();
 		ejecutarLog = (debugHabilitado) ? logMensaje("Regreso al punto de espera de la veta") : false;
@@ -646,12 +649,13 @@ public class Minero extends AugmentedRobot implements Directions {
 
 	// Picking a number of beepers from the vein
 	private void recoger(int numero) {
-		beepersActuales = 0;
+		int i = 0;
 		ejecutarLog = (debugHabilitado) ? logMensaje("Recojo beepers en la veta") : false;
-		while (beepersActuales < numero) {
+		while (i < numero) {
 			if (nextToABeeper()) {
 				pickBeeper();
 				beepersActuales++;
+				i++;
 			} else {
 				if (!frontIsClear())
 					break;
@@ -666,6 +670,7 @@ public class Minero extends AugmentedRobot implements Directions {
 		ejecutarLog = (debugHabilitado) ? logMensaje("Descargando en el punto de espera de la veta.") : false;
 		while (anyBeepersInBeeperBag()) {
 			putBeeper();
+			beepersActuales--;
 			beepersExtraidos++;
 		}
 		ejecutarLog = (debugHabilitado)
@@ -887,9 +892,8 @@ public class Minero extends AugmentedRobot implements Directions {
 	// Setup Karel World
 	private static void setupWorld(String mundo) {
 		World.readWorld(mundo);
-		World.setDelay(5);
+		World.setDelay(10);
 		World.setVisible(true);
-		// World.showSpeedControl(true, true);
 	}
 
 	// Main method
